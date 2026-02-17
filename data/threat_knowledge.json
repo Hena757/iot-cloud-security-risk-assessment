@@ -1,0 +1,44 @@
+{
+	"threats": [
+		{
+			"id": "T001",
+			"name": "Default credentials on device",
+			"scope": "iot",
+			"likelihood": 4,
+			"impact": 3,
+			"description": "Devices shipped with default or weak credentials can be easily compromised."
+		},
+		{
+			"id": "T002",
+			"name": "Unpatched firmware",
+			"scope": "iot",
+			"likelihood": 3,
+			"impact": 4,
+			"description": "Outdated firmware often contains known vulnerabilities."
+		},
+		{
+			"id": "C001",
+			"name": "Publicly exposed management endpoint",
+			"scope": "cloud",
+			"likelihood": 3,
+			"impact": 5,
+			"description": "Management consoles exposed to the internet increase compromise risk."
+		},
+		{
+			"id": "C002",
+			"name": "Over-privileged IAM roles",
+			"scope": "cloud",
+			"likelihood": 4,
+			"impact": 4,
+			"description": "Excessive permissions enable lateral movement and data exfiltration."
+		},
+		{
+			"id": "B001",
+			"name": "Supply chain vulnerability",
+			"scope": "both",
+			"likelihood": 2,
+			"impact": 5,
+			"description": "Dependencies or third-party components with vulnerabilities."
+		}
+	]
+}

@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>IoT & Cloud Security Risk Assessment</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>IoT & Cloud Security Risk Assessment</h1>
+
+      <form action="/analyze" method="post">
+        <label>Asset name</label>
+        <input type="text" name="asset_name" placeholder="e.g., Building-Sensor-01">
+
+        <label>Asset type</label>
+        <select name="asset_type">
+          <option value="iot">IoT Device</option>
+          <option value="cloud">Cloud Service</option>
+        </select>
+
+        <label>Global mitigation (%)</label>
+        <input type="range" name="mitigation_pct" min="0" max="100" value="0" oninput="this.nextElementSibling.value = this.value">
+        <output>0</output>
+
+        <button type="submit">Analyze</button>
+      </form>
+
+      <section>
+        <h2>Threat knowledge (sample)</h2>
+        <ul>
+          {% for t in threats %}
+            <li><strong>{{ t.id }}</strong> — {{ t.name }} (scope: {{ t.scope }})</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

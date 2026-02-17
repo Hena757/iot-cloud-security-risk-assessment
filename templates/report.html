@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Risk Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>Risk Report for {{ asset_name }} ({{ asset_type }})</h1>
+      <p>Applied mitigation: {{ mitigation }}%</p>
+
+      <table>
+        <thead>
+          <tr><th>ID</th><th>Name</th><th>Likelihood</th><th>Impact</th><th>Risk Score</th></tr>
+        </thead>
+        <tbody>
+          {% for r in results %}
+            <tr>
+              <td>{{ r.id }}</td>
+              <td title="{{ r.description }}">{{ r.name }}</td>
+              <td>{{ r.likelihood }}</td>
+              <td>{{ r.impact }}</td>
+              <td>{{ r.risk_score }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <p><a href="/">Back</a></p>
+    </div>
+  </body>
+</html>

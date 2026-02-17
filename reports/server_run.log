@@ -23,3 +23,21 @@ Press CTRL+C to quit
 === Notes ===
 - App entrypoint: main.py
 - Threat file: data/threat_knowledge.json
+2026-02-18 00:08:36,357 INFO: [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.1.2:5000 [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:08:36,358 INFO: [33mPress CTRL+C to quit[0m [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:08:36,400 INFO:  * Restarting with watchdog (windowsapi) [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:08:36,675 WARNING:  * Debugger is active! [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:08:36,682 INFO:  * Debugger PIN: 835-021-689 [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:08:59,925 INFO: Request: GET / from 127.0.0.1 [in C:\Users\hena\iot-cloud-security-risk-assessment\main.py:31]
+2026-02-18 00:08:59,939 INFO: 127.0.0.1 - - [18/Feb/2026 00:08:59] "GET / HTTP/1.1" 200 - [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:09:19,163 INFO:  * Detected change in 'C:\\Users\\hena\\iot-cloud-security-risk-assessment\\main.py', reloading [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:09:19,213 INFO:  * Restarting with watchdog (windowsapi) [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:09:19,623 WARNING:  * Debugger is active! [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:09:19,626 INFO:  * Debugger PIN: 835-021-689 [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]
+2026-02-18 00:10:25,565 INFO: Request: POST /analyze from 127.0.0.1 [in C:\Users\hena\iot-cloud-security-risk-assessment\main.py:31]
+127.0.0.1 - POST /analyze
+ANALYZE: asset=test type=iot mitigation=0.1
+2026-02-18 00:10:25,624 INFO: 127.0.0.1 - - [18/Feb/2026 00:10:25] "POST /analyze HTTP/1.1" 200 - [in C:\Users\hena\AppData\Roaming\Python\Python312\site-packages\werkzeug\_internal.py:97]

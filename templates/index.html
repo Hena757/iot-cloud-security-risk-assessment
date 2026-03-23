@@ -8,31 +8,47 @@
   </head>
   <body>
     <div class="container">
-      <h1>IoT & Cloud Security Risk Assessment</h1>
+      <h1>🔒 IoT & Cloud Security Risk Assessment</h1>
 
       <form action="/analyze" method="post">
-        <label>Asset name</label>
-        <input type="text" name="asset_name" placeholder="e.g., Building-Sensor-01">
+        <label>Asset Name</label>
+        <input type="text" name="asset_name" placeholder="e.g., Building-Sensor-01" required>
 
-        <label>Asset type</label>
-        <select name="asset_type">
+        <label>Asset Type</label>
+        <select name="asset_type" required>
           <option value="iot">IoT Device</option>
           <option value="cloud">Cloud Service</option>
         </select>
 
-        <label>Global mitigation (%)</label>
-        <input type="range" name="mitigation_pct" min="0" max="100" value="0" oninput="this.nextElementSibling.value = this.value">
-        <output>0</output>
+        <label>Mitigation Level</label>
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="range" name="mitigation_pct" min="0" max="100" value="0" oninput="this.nextElementSibling.value = this.value">
+          <output>0</output>%
+        </div>
 
-        <button type="submit">Analyze</button>
+        <button type="submit">Analyze Risk</button>
       </form>
 
       <section>
-        <h2>Threat knowledge (sample)</h2>
+        <h2>📋 Available Threats</h2>
+        <p style="color: #6b7280; margin-bottom: 12px;">These are the threats that will be assessed for your asset:</p>
         <ul>
           {% for t in threats %}
-            <li><strong>{{ t.id }}</strong> — {{ t.name }} (scope: {{ t.scope }})</li>
+            <li>
+              <strong style="color: #1f2937;">{{ t.id }}</strong> — <span style="color: #374151;">{{ t.name }}</span>
+              <span style="color: #9ca3af; font-size: 12px;">({{ t.scope }})</span>
+            </li>
           {% endfor %}
+        </ul>
+      </section>
+
+      <section style="background: #f0f9ff; padding: 16px; border-radius: 6px; border-left: 4px solid #3b82f6;">
+        <h3 style="margin-top: 0;">💡 How This Works</h3>
+        <ul style="margin: 12px 0; padding-left: 20px;">
+          <li>Select your asset and its type (IoT or Cloud)</li>
+          <li>Adjust the mitigation percentage to account for security measures already in place</li>
+          <li>Click "Analyze Risk" to see detailed risk scores and visualizations</li>
+          <li>Risk scores are calculated as: <code>Likelihood × Impact × (1 - Mitigation)</code></li>
         </ul>
       </section>
     </div>

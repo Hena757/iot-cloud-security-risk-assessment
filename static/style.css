@@ -1,8 +1,357 @@
-body { font-family: Arial, sans-serif; background:#f6f8fa; color:#222 }
-.container { width:900px; margin:32px auto; background:#fff; padding:20px; border-radius:6px; box-shadow:0 2px 6px rgba(0,0,0,0.06) }
-h1 { margin-top:0 }
-form { display:flex; gap:12px; align-items:center; flex-wrap:wrap }
-form input[type=text], form select { padding:6px 8px; min-width:220px }
-form button { padding:8px 12px }
-table { width:100%; border-collapse:collapse; margin-top:12px }
-table th, table td { padding:8px; border-bottom:1px solid #eee; text-align:left }
+body { 
+  font-family: Arial, sans-serif; 
+  background: #f6f8fa; 
+  color: #222;
+  margin: 0;
+  padding: 0;
+}
+
+.container { 
+  width: 1200px; 
+  margin: 32px auto; 
+  background: #fff; 
+  padding: 30px; 
+  border-radius: 8px; 
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+h1 { 
+  margin-top: 0;
+  color: #1f2937;
+  border-bottom: 3px solid #3b82f6;
+  padding-bottom: 12px;
+}
+
+h2 {
+  color: #374151;
+  margin-top: 24px;
+  margin-bottom: 16px;
+}
+
+h3 {
+  margin: 0;
+  color: #4b5563;
+  font-size: 14px;
+}
+
+/* Form Styles */
+form { 
+  display: flex; 
+  gap: 12px; 
+  align-items: stretch; 
+  flex-wrap: wrap;
+  background: #f9fafb;
+  padding: 16px;
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+
+form label {
+  display: flex;
+  align-items: center;
+  font-weight: 500;
+  font-size: 14px;
+  color: #4b5563;
+  min-width: 120px;
+}
+
+form input[type=text], 
+form select { 
+  padding: 8px 12px; 
+  min-width: 220px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 14px;
+}
+
+form input[type=range] {
+  min-width: 150px;
+  cursor: pointer;
+}
+
+form output {
+  padding: 8px 12px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  min-width: 40px;
+  text-align: center;
+  font-weight: bold;
+}
+
+form button { 
+  padding: 8px 16px;
+  background: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background 0.2s;
+}
+
+form button:hover {
+  background: #2563eb;
+}
+
+/* Report Header */
+.report-header {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  margin-bottom: 32px;
+  padding: 16px;
+  background: #f0f9ff;
+  border-left: 4px solid #3b82f6;
+  border-radius: 4px;
+}
+
+.mitigation-info {
+  margin: 0;
+  font-size: 16px;
+}
+
+.overall-risk {
+  text-align: center;
+}
+
+/* Risk Gauge */
+.risk-gauge {
+  width: 120px;
+  height: 120px;
+  margin: 0 auto;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  font-weight: bold;
+  color: white;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.risk-gauge-low {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+}
+
+.risk-gauge-medium {
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+}
+
+.risk-gauge-high {
+  background: linear-gradient(135deg, #ea580c 0%, #c2410c 100%);
+}
+
+.risk-gauge-critical {
+  background: linear-gradient(135deg, #dc2626 0%, #b91c1c 100%);
+  animation: pulse-critical 2s infinite;
+}
+
+@keyframes pulse-critical {
+  0%, 100% { box-shadow: 0 4px 12px rgba(220, 38, 38, 0.4); }
+  50% { box-shadow: 0 4px 20px rgba(220, 38, 38, 0.8); }
+}
+
+.risk-value {
+  display: block;
+}
+
+/* Chart Sections */
+.chart-section {
+  margin: 32px 0;
+  padding: 20px;
+  background: #fafbfc;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+}
+
+.chart-container {
+  position: relative;
+  height: 300px;
+  margin-top: 12px;
+}
+
+/* Table Styles */
+.table-section {
+  margin: 32px 0;
+}
+
+table { 
+  width: 100%; 
+  border-collapse: collapse; 
+  margin-top: 12px;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+table thead {
+  background: #f3f4f6;
+}
+
+table th { 
+  padding: 12px; 
+  text-align: left;
+  font-weight: 600;
+  color: #374151;
+  border-bottom: 2px solid #d1d5db;
+}
+
+table td { 
+  padding: 12px; 
+  border-bottom: 1px solid #e5e7eb;
+}
+
+table tbody tr {
+  transition: background-color 0.2s;
+}
+
+table tbody tr:hover {
+  background-color: #f9fafb;
+}
+
+/* Risk Level Row Styling */
+table tbody tr.risk-low {
+  border-left: 4px solid #10b981;
+}
+
+table tbody tr.risk-medium {
+  border-left: 4px solid #f59e0b;
+}
+
+table tbody tr.risk-high {
+  border-left: 4px solid #ea580c;
+}
+
+table tbody tr.risk-critical {
+  border-left: 4px solid #dc2626;
+  background-color: #fef2f2;
+}
+
+/* Badge Styles */
+.risk-badge {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.risk-badge-low {
+  background-color: #d1fae5;
+  color: #065f46;
+}
+
+.risk-badge-medium {
+  background-color: #fef3c7;
+  color: #92400e;
+}
+
+.risk-badge-high {
+  background-color: #fed7aa;
+  color: #92400e;
+}
+
+.risk-badge-critical {
+  background-color: #fee2e2;
+  color: #991b1b;
+  animation: pulse 1.5s infinite;
+}
+
+.likelihood-badge,
+.impact-badge {
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  line-height: 24px;
+  text-align: center;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 12px;
+  color: white;
+}
+
+.likelihood-badge {
+  background-color: #6366f1;
+}
+
+.impact-badge {
+  background-color: #8b5cf6;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* Button Group */
+.button-group {
+  margin-top: 32px;
+  text-align: center;
+}
+
+.btn {
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: #2563eb;
+  box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+}
+
+/* Section Styles */
+section {
+  margin-top: 24px;
+}
+
+section ul {
+  list-style-position: inside;
+  line-height: 1.8;
+}
+
+section li {
+  margin: 8px 0;
+}
+
+section strong {
+  color: #1f2937;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .container {
+    width: 95%;
+  }
+  
+  .report-header {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  form {
+    flex-direction: column;
+  }
+  
+  form label {
+    min-width: auto;
+  }
+  
+  form input[type=text], 
+  form select {
+    min-width: 100%;
+  }
+}
+

@@ -26,6 +26,22 @@ app.logger.addHandler(handler)
 logging.getLogger('werkzeug').addHandler(handler)
 
 
+# Custom Jinja filter to get risk level
+def get_risk_level(score):
+	"""Determine risk level based on risk score"""
+	score = float(score)
+	if score >= 15:
+		return 'critical'
+	elif score >= 10:
+		return 'high'
+	elif score >= 5:
+		return 'medium'
+	else:
+		return 'low'
+
+app.jinja_env.filters['getRiskLevel'] = get_risk_level
+
+
 @app.before_request
 def log_request():
     app.logger.info(f"Request: {request.method} {request.path} from {request.remote_addr}")

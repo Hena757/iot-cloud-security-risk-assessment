@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>IoT & Cloud Security Risk Assessment</title>
+    <link rel="stylesheet" href="/static/style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1>🔒 IoT & Cloud Security Risk Assessment</h1>
+
+      <form action="/analyze" method="post">
+        <div class="form-group">
+          <label>Cloud Platform</label>
+          <select name="cloud_platform" required>
+            <option value="" disabled selected>Your Choice</option>
+            <option value="AWS">AWS</option>
+            <option value="Azure">Azure</option>
+            <option value="Google Cloud">Google Cloud</option>
+            <option value="IBM Cloud">IBM Cloud</option>
+            <option value="Oracle Cloud">Oracle Cloud</option>
+            <option value="Alibaba Cloud">Alibaba Cloud</option>
+            <option value="DigitalOcean">DigitalOcean</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Asset Type</label>
+          <div style="display: flex; gap: 8px;">
+            <input type="radio" id="iot" name="asset_type" value="iot" required>
+            <label for="iot">IoT Device</label>
+            <input type="radio" id="cloud" name="asset_type" value="cloud" required>
+            <label for="cloud">Cloud Service</label>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Mitigation Level</label>
+          <div style="display: flex; gap: 8px; align-items: center;">
+            <input type="range" name="mitigation_pct" min="0" max="100" value="0" oninput="this.nextElementSibling.value = this.value">
+            <output>0</output>%
+          </div>
+        </div>
+
+        <button type="submit">Analyze Risk</button>
+      </form>
+
+      <section>
+        <h2>📋 Available Threats</h2>
+        <p style="color: #6b7280; margin-bottom: 12px;">These are the threats that will be assessed for your asset:</p>
+        <div style="display: flex; gap: 20px;">
+          <ul style="flex: 1;">
+            {% for t in threats[:threats|length//2] %}
+              <li style="color: #374151;">{{ t.name }}</li>
+            {% endfor %}
+          </ul>
+          <ul style="flex: 1;">
+            {% for t in threats[threats|length//2:] %}
+              <li style="color: #374151;">{{ t.name }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      </section>
+
+      <section style="background: #f0f9ff; padding: 16px; border-radius: 6px; border-left: 4px solid #3b82f6;">
+        <h3 style="margin-top: 0;">💡 How This Works</h3>
+        <ul style="margin: 12px 0; padding-left: 20px;">
+          <li>Select your asset and its type (IoT or Cloud)</li>
+          <li>Adjust the mitigation percentage to account for security measures already in place</li>
+          <li>Click "Analyze Risk" to see detailed risk scores and visualizations</li>
+          <li>Risk scores are calculated as: <code>Likelihood × Impact × (1 - Mitigation)</code></li>
+        </ul>
+      </section>
+    </div>
+  </body>
+</html>

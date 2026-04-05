@@ -1,0 +1,59 @@
+Cloud_Provider,Service_Model,Region,Threat_Type,Vulnerability,Likelihood,Impact,Risk_Score,Compliance_Risk,Data_Sensitivity,Mitigation_Available
+AWS,IaaS,Global,Data Breach,Weak IAM Policies,5,5,25,High,High,Yes
+AWS,IaaS,US-East,DDoS Attack,Open Ports,4,4,16,Medium,Medium,Yes
+AWS,PaaS,Asia,Insider Threat,Lack of Monitoring,3,5,15,High,High,No
+AWS,SaaS,Europe,Phishing Attack,Weak Authentication,4,3,12,Medium,Medium,Yes
+AWS,IaaS,India,Malware Injection,Unpatched Systems,3,4,12,Medium,High,Yes
+AWS,PaaS,Global,API Exploit,Unsecured APIs,4,4,16,High,High,No
+
+Azure,IaaS,Global,Data Leak,Storage Misconfiguration,5,5,25,High,High,Yes
+Azure,PaaS,Asia,Service Downtime,Dependency Failure,3,4,12,Medium,Medium,Yes
+Azure,SaaS,Europe,Account Hijack,Weak Passwords,4,4,16,Medium,Medium,Yes
+Azure,IaaS,India,DDoS Attack,Traffic Flooding,4,4,16,Medium,Medium,Yes
+Azure,PaaS,US,Zero-Day Attack,Unknown Vulnerabilities,5,5,25,High,High,No
+Azure,SaaS,Global,Data Loss,Backup Failure,2,5,10,Medium,High,Yes
+
+Google Cloud,IaaS,Global,API Exploit,Unsecured Endpoints,4,4,16,High,High,Yes
+Google Cloud,PaaS,US-West,Container Escape,Improper Isolation,3,5,15,High,High,No
+Google Cloud,SaaS,Asia,Data Loss,Backup Failure,2,5,10,Medium,High,Yes
+Google Cloud,IaaS,India,Phishing Attack,Weak Authentication,4,3,12,Medium,Medium,Yes
+Google Cloud,PaaS,Europe,Service Downtime,Resource Failure,3,4,12,Medium,Medium,Yes
+
+IBM Cloud,IaaS,Global,Malware Injection,Unpatched Systems,3,4,12,Medium,Medium,Yes
+IBM Cloud,PaaS,Europe,Zero-Day Attack,Unknown Vulnerabilities,5,5,25,High,High,No
+IBM Cloud,SaaS,Asia,Insider Threat,Lack of Monitoring,3,5,15,High,High,No
+IBM Cloud,IaaS,India,Data Breach,Weak Encryption,4,5,20,High,High,Yes
+
+Oracle Cloud,IaaS,Global,Data Breach,Encryption Failure,4,5,20,High,High,Yes
+Oracle Cloud,SaaS,Asia,Account Hijack,Weak Password Policy,3,4,12,Medium,Medium,Yes
+Oracle Cloud,PaaS,Europe,API Exploit,Improper Access Control,4,4,16,High,High,Yes
+Oracle Cloud,IaaS,India,DDoS Attack,Traffic Overload,4,4,16,Medium,Medium,Yes
+
+Alibaba Cloud,IaaS,Asia,DDoS Attack,Traffic Overload,5,4,20,Medium,Medium,Yes
+Alibaba Cloud,PaaS,Global,Data Exposure,Improper Access Control,4,5,20,High,High,Yes
+Alibaba Cloud,SaaS,Europe,Phishing Attack,Weak Authentication,4,3,12,Medium,Medium,Yes
+Alibaba Cloud,IaaS,India,Data Loss,Backup Failure,2,5,10,Medium,High,No
+
+DigitalOcean,IaaS,Global,Service Downtime,Limited Redundancy,3,3,9,Low,Low,Yes
+DigitalOcean,PaaS,US,Data Loss,No Backup Strategy,2,5,10,Medium,High,No
+DigitalOcean,IaaS,India,Malware Injection,Unpatched Systems,3,4,12,Medium,Medium,Yes
+
+AWS,SaaS,Global,Insider Threat,Lack of Monitoring,3,5,15,High,High,No
+Azure,IaaS,Europe,Data Breach,Weak IAM Policies,5,5,25,High,High,Yes
+Google Cloud,PaaS,Global,API Exploit,Unsecured APIs,4,4,16,High,High,Yes
+IBM Cloud,SaaS,Global,Phishing Attack,Weak Authentication,4,3,12,Medium,Medium,Yes
+Oracle Cloud,PaaS,Asia,Service Downtime,Dependency Failure,3,4,12,Medium,Medium,Yes
+
+AWS,IaaS,Europe,Data Leak,Storage Misconfiguration,4,5,20,High,High,Yes
+Azure,SaaS,India,Phishing Attack,Weak Authentication,4,3,12,Medium,Medium,Yes
+Google Cloud,IaaS,Asia,DDoS Attack,Open Ports,4,4,16,Medium,Medium,Yes
+IBM Cloud,PaaS,Global,Zero-Day Attack,Unknown Vulnerabilities,5,5,25,High,High,No
+Oracle Cloud,SaaS,Europe,Account Hijack,Weak Passwords,3,4,12,Medium,Medium,Yes
+Alibaba Cloud,PaaS,Asia,Data Exposure,Improper Access Control,4,5,20,High,High,Yes
+
+AWS,PaaS,India,API Exploit,Unsecured APIs,4,4,16,High,High,Yes
+Azure,IaaS,Global,Malware Injection,Unpatched Systems,3,4,12,Medium,Medium,Yes
+Google Cloud,SaaS,Europe,Data Loss,Backup Failure,2,5,10,Medium,High,Yes
+IBM Cloud,IaaS,Asia,Data Breach,Weak Encryption,4,5,20,High,High,Yes
+Oracle Cloud,IaaS,Global,DDoS Attack,Traffic Flooding,4,4,16,Medium,Medium,Yes
+Alibaba Cloud,SaaS,India,Phishing Attack,Weak Authentication,4,3,12,Medium,Medium,Yes

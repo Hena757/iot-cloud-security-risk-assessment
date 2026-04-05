@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Risk Report</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Risk Report for {{ cloud_platform }} ({{ asset_type }})</h1>
+      <div class="report-header">
+        <p class="mitigation-info">Applied mitigation: <strong>{{ mitigation }}%</strong></p>
+        <div class="overall-risk">
+          <h3>Overall Risk Level</h3>
+          <div class="risk-gauge" id="riskGauge">
+            <span class="risk-value" id="overallRiskValue">--</span>
+          </div>
+          <span class="risk-level-text" id="overallRiskLevel">--</span>
+        </div>
+      </div>
+
+      <!-- Risk Score Bar Chart -->
+      <div class="chart-section">
+        <h2>Risk Scores by Threat</h2>
+        <div class="chart-container">
+          <canvas id="riskChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Likelihood vs Impact Scatter Plot -->
+      <div class="chart-section">
+        <h2>Likelihood vs Impact Analysis</h2>
+        <div class="chart-container">
+          <canvas id="scatterChart"></canvas>
+        </div>
+      </div>
+
+      <!-- Risk Details Table -->
+      <div class="table-section">
+        <h2>Detailed Threat Assessment</h2>
+        <table>
+          <thead>
+            <tr><th>ID</th><th>Name</th><th>Likelihood</th><th>Impact</th><th>Risk Score</th><th>Risk Level</th></tr>
+          </thead>
+          <tbody>
+            {% for r in results %}
+              <tr class="risk-{{ r.risk_score | getRiskLevel }}">
+                <td>{{ r.id }}</td>
+                <td title="{{ r.description }}">{{ r.name }}</td>
+                <td><span class="likelihood-badge">{{ r.likelihood | int }}</span></td>
+                <td><span class="impact-badge">{{ r.impact | int }}</span></td>
+                <td><strong>{{ r.risk_score }}</strong></td>
+                <td><span class="risk-badge risk-badge-{{ r.risk_score | getRiskLevel }}">{{ r.risk_score | getRiskLevel | upper }}</span></td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+
+      <div class="button-group">
+        <a href="/" class="btn btn-primary">Back to Assessment</a>
+      </div>
+    </div>
+
+    <script>
+      // Risk data
+      const riskData = [
+        {% for r in results %}
+          {
+            id: "{{ r.id }}",
+            name: "{{ r.name }}",
+            risk_score: {{ r.risk_score }},
+            likelihood: {{ r.likelihood }},
+            impact: {{ r.impact }}
+          }{{ "," if not loop.last }}
+        {% endfor %}
+      ];
+
+      // Helper function to get risk level
+      function getRiskLevel(score) {
+        if (score >= 15) return 'critical';
+        if (score >= 10) return 'high';
+        if (score >= 5) return 'medium';
+        return 'low';
+      }
+
+      // Calculate overall risk
+      function getOverallRisk() {
+        return {{ avg_risk_score }};
+      }
+
+      // Display Overall Risk
+      const overallRisk = getOverallRisk();
+      const overallRiskLevel = getRiskLevel(overallRisk);
+      const riskGaugeEl = document.getElementById('riskGauge');
+      const riskValueEl = document.getElementById('overallRiskValue');
+      const riskLevelEl = document.getElementById('overallRiskLevel');
+      riskValueEl.textContent = overallRisk.toFixed(2);
+      riskLevelEl.textContent = overallRiskLevel.toUpperCase();
+      riskGaugeEl.className = `risk-gauge risk-gauge-${overallRiskLevel}`;
+
+      // Bar Chart - Risk Scores
+      const ctx = document.getElementById('riskChart').getContext('2d');
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: riskData.map(r => r.name),
+          datasets: [{
+            label: 'Risk Score',
+            data: riskData.map(r => r.risk_score),
+            backgroundColor: riskData.map(r => {
+              switch(getRiskLevel(r.risk_score)) {
+                case 'critical': return '#dc2626';
+                case 'high': return '#ea580c';
+                case 'medium': return '#f59e0b';
+                case 'low': return '#10b981';
+                default: return '#6b7280';
+              }
+            }),
+            borderColor: riskData.map(r => {
+              switch(getRiskLevel(r.risk_score)) {
+                case 'critical': return '#b91c1c';
+                case 'high': return '#c2410c';
+                case 'medium': return '#d97706';
+                case 'low': return '#059669';
+                default: return '#4b5563';
+              }
+            }),
+            borderWidth: 1,
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: false
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 25,
+              ticks: {
+                stepSize: 5
+              }
+            }
+          }
+        }
+      });
+
+      // Scatter Chart - Likelihood vs Impact
+      const scatterCtx = document.getElementById('scatterChart').getContext('2d');
+      new Chart(scatterCtx, {
+        type: 'bubble',
+        data: {
+          datasets: [{
+            label: 'Threats',
+            data: riskData.map(r => ({
+              x: r.likelihood,
+              y: r.impact,
+              r: Math.sqrt(r.risk_score) * 3,
+              name: r.name,
+              riskScore: r.risk_score
+            })),
+            backgroundColor: riskData.map(r => {
+              switch(getRiskLevel(r.risk_score)) {
+                case 'critical': return 'rgba(220, 38, 38, 0.6)';
+                case 'high': return 'rgba(234, 88, 12, 0.6)';
+                case 'medium': return 'rgba(245, 158, 11, 0.6)';
+                case 'low': return 'rgba(16, 185, 129, 0.6)';
+                default: return 'rgba(107, 114, 128, 0.6)';
+              }
+            }),
+            borderColor: riskData.map(r => {
+              switch(getRiskLevel(r.risk_score)) {
+                case 'critical': return 'rgb(220, 38, 38)';
+                case 'high': return 'rgb(234, 88, 12)';
+                case 'medium': return 'rgb(245, 158, 11)';
+                case 'low': return 'rgb(16, 185, 129)';
+                default: return 'rgb(107, 114, 128)';
+              }
+            }),
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            legend: {
+              display: false
+            },
+            tooltip: {
+              callbacks: {
+                label: function(context) {
+                  const point = context.raw;
+                  return `${point.name} - Risk: ${point.riskScore}`;
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              type: 'linear',
+              position: 'bottom',
+              min: 0,
+              max: 5,
+              title: {
+                display: true,
+                text: 'Likelihood'
+              }
+            },
+            y: {
+              min: 0,
+              max: 5,
+              title: {
+                display: true,
+                text: 'Impact'
+              }
+            }
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

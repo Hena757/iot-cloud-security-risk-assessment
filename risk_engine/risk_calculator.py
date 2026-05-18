@@ -1,5 +1,6 @@
 import csv
 from typing import List, Dict
+from .ml_model import predictor
 
 
 def load_threats(path: str) -> List[Dict]:
@@ -23,7 +24,12 @@ def load_threats(path: str) -> List[Dict]:
 				"cloud_provider": row["Cloud_Provider"],
 				"likelihood": likelihood,
 				"impact": impact,
-				"description": row["Vulnerability"]
+				"description": row["Vulnerability"],
+				"service_model": row["Service_Model"],
+				"region": row["Region"],
+				"compliance_risk": row["Compliance_Risk"],
+				"data_sensitivity": row["Data_Sensitivity"],
+				"mitigation_available": row["Mitigation_Available"]
 			}
 			threats.append(threat)
 	return threats
@@ -32,7 +38,7 @@ def load_threats(path: str) -> List[Dict]:
 def analyze_risks(threats: List[Dict], asset_type: str = "iot", cloud_platform: str = None, mitigation: float = 0.0) -> List[Dict]:
 	"""Compute risk score for threats relevant to the given asset type and cloud platform.
 
-	risk_score = likelihood * impact * (1 - mitigation)
+	risk_score = ML_predicted_risk * (1 - mitigation)
 	Returns list of threats with computed `risk_score` sorted descending.
 	"""
 	relevant = [t for t in threats if t.get("scope", "both") in (asset_type, "both")]
@@ -43,15 +49,25 @@ def analyze_risks(threats: List[Dict], asset_type: str = "iot", cloud_platform: 
 	
 	results = []
 	for t in relevant:
-		likelihood = float(t.get("likelihood", 1))
-		impact = float(t.get("impact", 1))
-		score = likelihood * impact * max(0.0, 1.0 - float(mitigation))
+		# Use ML model to predict base risk
+		features = {
+			'Cloud_Provider': t.get('cloud_provider', ''),
+			'Service_Model': t.get('service_model', ''),
+			'Region': t.get('region', ''),
+			'Threat_Type': t.get('name', ''),
+			'Vulnerability': t.get('description', ''),
+			'Compliance_Risk': t.get('compliance_risk', ''),
+			'Data_Sensitivity': t.get('data_sensitivity', ''),
+			'Mitigation_Available': t.get('mitigation_available', '')
+		}
+		base_risk = predictor.predict_risk(features)
+		score = base_risk * max(0.0, 1.0 - float(mitigation))
 		r = {
 			"id": t.get("id"),
 			"name": t.get("name"),
 			"description": t.get("description", ""),
-			"likelihood": likelihood,
-			"impact": impact,
+			"likelihood": t.get("likelihood", 1),
+			"impact": t.get("impact", 1),
 			"risk_score": round(score, 3),
 		}
 		results.append(r)
